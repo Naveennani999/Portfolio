@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naveen Kumar Kondapelly — SDE @ AWS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060810;
+    --surface: #0d1117;
+    --border: rgba(99,179,237,0.12);
+    --accent: #63b3ed;
+    --accent2: #68d391;
+    --accent3: #f6ad55;
+    --text: #e2e8f0;
+    --muted: #718096;
+    --highlight: rgba(99,179,237,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(99,179,237,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,179,237,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(6,8,16,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  section { position: relative; z-index: 1; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 7rem 4rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-content { max-width: 780px; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--highlight);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--accent2);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+  }
+  .name-highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-tagline {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: var(--bg); font-weight: 700; }
+  .btn-primary:hover { background: #90cdf4; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,179,237,0.3); }
+  .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--border); }
+  .btn-outline:hover { background: var(--highlight); border-color: var(--accent); transform: translateY(-1px); }
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* SECTIONS */
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 4rem;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* SKILLS */
+  #skills { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .skill-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(99,179,237,0.1); }
+  .skill-card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    background: var(--highlight);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ACHIEVEMENTS */
+  .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .achievement-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .achievement-card:hover { border-color: var(--accent3); box-shadow: 0 8px 24px rgba(246,173,85,0.1); }
+  .achievement-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent3);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .achievement-label { font-size: 0.82rem; color: var(--muted); line-height: 1.4; }
+
+  /* EXPERIENCE */
+  #experience { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .timeline-item { position: relative; margin-bottom: 3.5rem; padding-left: 2rem; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.4rem;
+    width: 9px; height: 9px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(99,179,237,0.5);
+    transform: translateX(-4px);
+  }
+  .timeline-item:first-child::before { background: var(--accent2); box-shadow: 0 0 12px rgba(104,211,145,0.5); }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .exp-company { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; }
+  .exp-company.current { color: var(--accent2); }
+  .exp-role { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.5rem; font-weight: 500; }
+  .exp-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    background: var(--highlight);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.7rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .exp-bullets { list-style: none; margin-top: 1rem; }
+  .exp-bullets li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; top: 0.2rem; }
+  .exp-bullets li strong { color: var(--text); font-weight: 500; }
+
+  /* EDUCATION */
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .edu-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+  .edu-degree { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .edu-school { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.3rem; }
+  .edu-location { font-size: 0.78rem; color: var(--muted); }
+  .edu-date { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; }
+
+  /* CONTACT */
+  #contact { border-top: 1px solid var(--border); }
+  .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; padding: 6rem 2rem; }
+  .contact-desc { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    transition: all 0.2s;
+    background: var(--surface);
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99,179,237,0.15); }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* SCROLL ANIMATIONS — content visible by default, JS enhances */
+  .fade-in { opacity: 1; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero, .section-inner { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .exp-header { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">NK.</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#achievements">Impact</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Currently @ Amazon Web Services</div>
+    <h1>
+      <span class="name-highlight">Naveen Kumar</span><br>Kondapelly
+    </h1>
+    <p class="hero-tagline">
+      Software Development Engineer building secure, high performance cloud native systems at scale. Specialized in distributed AWS infrastructure, ML service APIs, and DevOps automation.
+    </p>
+    <div class="hero-actions">
+      <a href="mailto:kumarkondapelly1@gmail.com" class="btn btn-primary">✉ Get In Touch</a>
+      <a href="https://www.linkedin.com/in/naveenkumarkondapelly" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Companies</div>
+      </div>
+      <div>
+        <div class="stat-num">50%</div>
+        <div class="stat-label">Perf Gain (Go)</div>
+      </div>
+      <div>
+        <div class="stat-num">45%</div>
+        <div class="stat-label">Test Coverage Boost</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">// Technical Arsenal</div>
+    <h2>Skills &amp; Technologies</h2>
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <div class="skill-card-title">⟨/⟩ Languages</div>
+        <div class="skill-tags">
+          <span class="tag">Java</span><span class="tag">Python</span><span class="tag">Go</span>
+          <span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-title">☁ Cloud &amp; Infrastructure</div>
+        <div class="skill-tags">
+          <span class="tag">AWS EC2</span><span class="tag">S3</span><span class="tag">Lambda</span>
+          <span class="tag">DynamoDB</span><span class="tag">KMS</span><span class="tag">STS</span>
+          <span class="tag">ECS</span><span class="tag">EKS</span><span class="tag">Azure</span>
+          <span class="tag">Terraform</span><span class="tag">CloudFormation</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-title">⚙ Frameworks &amp; Libraries</div>
+        <div class="skill-tags">
+          <span class="tag">Spring Boot</span><span class="tag">React.js</span><span class="tag">Node.js</span>
+          <span class="tag">Hibernate</span><span class="tag">Spring MVC</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-title">🔄 DevOps &amp; CI/CD</div>
+        <div class="skill-tags">
+          <span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">GitHub Actions</span>
+          <span class="tag">CodePipeline</span><span class="tag">CodeBuild</span><span class="tag">Jenkins</span><span class="tag">Maven</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-title">🗄 Databases</div>
+        <div class="skill-tags">
+          <span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Oracle</span>
+          <span class="tag">Azure SQL</span><span class="tag">DynamoDB</span><span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-title">🔐 Security &amp; APIs</div>
+        <div class="skill-tags">
+          <span class="tag">OAuth2</span><span class="tag">JWT</span><span class="tag">IAM</span>
+          <span class="tag">REST APIs</span><span class="tag">GraphQL</span><span class="tag">Kafka</span><span class="tag">SOAP</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-title">📊 Testing &amp; Observability</div>
+        <div class="skill-tags">
+          <span class="tag">Hydra Orchestration</span><span class="tag">JUnit</span><span class="tag">TestNG</span>
+          <span class="tag">CloudWatch</span><span class="tag">App Insights</span><span class="tag">ELK Stack</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-title">🏗 Methodologies</div>
+        <div class="skill-tags">
+          <span class="tag">Microservices</span><span class="tag">Agile</span><span class="tag">CI/CD</span>
+          <span class="tag">TDD</span><span class="tag">IaC</span><span class="tag">Performance Optimization</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-inner">
+    <div class="section-label">// Impact By The Numbers</div>
+    <h2>Key Achievements</h2>
+    <div class="achievements-grid">
+      <div class="achievement-card fade-in">
+        <div class="achievement-num">45%</div>
+        <div class="achievement-label">Increase in test coverage via Hydra orchestration at AWS</div>
+      </div>
+      <div class="achievement-card fade-in">
+        <div class="achievement-num">60%</div>
+        <div class="achievement-label">Reduction in environment-specific failures via Docker</div>
+      </div>
+      <div class="achievement-card fade-in">
+        <div class="achievement-num">50%</div>
+        <div class="achievement-label">Faster execution after Python to Go migration</div>
+      </div>
+      <div class="achievement-card fade-in">
+        <div class="achievement-num">35%</div>
+        <div class="achievement-label">Decrease in memory utilization after Go migration</div>
+      </div>
+      <div class="achievement-card fade-in">
+        <div class="achievement-num">40%</div>
+        <div class="achievement-label">Faster environment provisioning with Terraform &amp; CloudFormation</div>
+      </div>
+      <div class="achievement-card fade-in">
+        <div class="achievement-num">25%</div>
+        <div class="achievement-label">Infrastructure cost reduction via CloudWatch tuning</div>
+      </div>
+      <div class="achievement-card fade-in">
+        <div class="achievement-num">30%</div>
+        <div class="achievement-label">SQL query speedup via refactoring at Centene</div>
+      </div>
+      <div class="achievement-card fade-in">
+        <div class="achievement-num">85%</div>
+        <div class="achievement-label">Backend test coverage achieved at Infotech</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label">// Work History</div>
+    <h2>Experience</h2>
+    <div class="timeline">
+
+      <!-- AWS -->
+      <div class="timeline-item fade-in">
+        <div class="exp-header">
+          <div>
+            <div class="exp-company current">Amazon Web Services (AWS)</div>
+            <div class="exp-role">Software Development Engineer &middot; WA, USA</div>
+          </div>
+          <span class="exp-date">Jul 2023 — Present</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Implemented <strong>FAS context mapping</strong> in Java and Python to enforce fine grained access control and automated policy validation for ML service APIs across distributed AWS environments.</li>
+          <li>Developed <strong>STS context mapping solutions</strong> in Java, Python, and TypeScript to establish secure cross service identity federation, supporting compliant authentication for ML workloads at enterprise scale.</li>
+          <li>Built <strong>cryptographic key lifecycle management</strong> within AWS KMS using Java and Python, enforcing enterprise grade encryption protocols and regulatory data security compliance across distributed cloud infrastructure.</li>
+          <li>Extended <strong>Hydra based test orchestration</strong> frameworks in Python and Java to execute ML API validation pipelines, enforcing quality gates prior to progressive multi region production deployments.</li>
+          <li>Developed a <strong>Hydra test suite</strong> encompassing regression, unit, and integration test scenarios across distributed microservices, reducing post deployment failures and increasing test coverage by <strong>45%</strong>.</li>
+          <li>Architected <strong>end to end CI/CD pipelines</strong> using GitHub Actions, CodePipeline, and CodeBuild, automating build, test, and deployment stages to accelerate production release velocity.</li>
+          <li>Containerized microservices and internal tooling using <strong>Docker</strong>, establishing dev to production environment parity and eliminating environment specific failures by over <strong>60%</strong>.</li>
+          <li>Engineered custom <strong>Dockerfiles</strong> across application layers, optimizing image size and build efficiency for workloads deployed within ECS and EKS clusters.</li>
+          <li>Implemented infrastructure as code using <strong>Terraform and CloudFormation</strong>, reducing environment provisioning time by <strong>40%</strong> and standardizing deployments across multiple AWS accounts.</li>
+          <li>Developed scalable backend services in <strong>Go</strong>, integrating AWS KMS, STS, and Lambda to support secure, high throughput cloud native operations.</li>
+          <li>Migrated legacy Python operational scripts to <strong>Go</strong> achieving <strong>50%</strong> reduction in execution time and <strong>35%</strong> decrease in memory utilization.</li>
+          <li>Monitored system health across EC2, S3, DynamoDB, and Lambda using <strong>GraphQL based dashboards</strong>, proactively detecting anomalies and ensuring production service uptime.</li>
+          <li>Performed routine <strong>stale host remediation</strong> identifying and decommissioning red hosts across EC2 fleets, preventing cascading failures in distributed systems.</li>
+          <li>Configured <strong>CloudWatch</strong> with custom metrics, structured log aggregation, and anomaly detection, reducing infrastructure costs by <strong>25%</strong> and maintaining SLA compliance.</li>
+          <li>Managed <strong>on call rotations</strong>, resolved production bugs, implemented automated failover mechanisms, and mentored new engineers through structured onboarding.</li>
+        </ul>
+      </div>
+
+      <!-- Centene -->
+      <div class="timeline-item fade-in">
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">Centene Corporation</div>
+            <div class="exp-role">Software Application Developer &middot; MO, USA</div>
+          </div>
+          <span class="exp-date">May 2022 — Jun 2023</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Architected modular <strong>Spring Boot microservices</strong> for Electronic Health Records platforms, enforcing transactional integrity, high availability, and horizontal scalability across HIPAA critical workloads.</li>
+          <li>Integrated <strong>Apache Kafka</strong> for real time ingestion and processing of lab results and patient data feeds reducing data lag to under <strong>2 seconds</strong>.</li>
+          <li>Deployed Spring Boot microservices on <strong>Azure App Service</strong> with Application Insights instrumentation, enabling real time health monitoring and audit trail generation for HIPAA regulated environments.</li>
+          <li>Engineered secure <strong>RESTful APIs using OAuth2 and JWT</strong> for authentication and authorization across internal and external partner systems.</li>
+          <li>Developed <strong>full stack web applications</strong> using React.js and Spring Boot for health data analytics and visualization, aligned with WCAG accessibility standards.</li>
+          <li>Refactored legacy <strong>SQL queries and stored procedures</strong> across PostgreSQL, MySQL, and Oracle reducing query execution time by <strong>30%</strong> and optimizing database indexing.</li>
+          <li>Containerized microservices using <strong>Docker</strong> and orchestrated deployments across Kubernetes clusters with rolling deployment strategies to minimize downtime.</li>
+          <li>Built secure microservices integrated with <strong>API Gateway, Lambda, and IAM</strong>, conducting security audits and threat modeling to reinforce cloud governance.</li>
+          <li>Designed and maintained <strong>GitLab CI/CD pipelines</strong> to automate build, test, and deployment workflows with Kafka stream tracking and Application Insights monitoring.</li>
+          <li>Executed <strong>backend data validation</strong> using Oracle SQL; mentored junior developers on TDD and design patterns in Agile sprint ceremonies.</li>
+        </ul>
+      </div>
+
+      <!-- Infotech -->
+      <div class="timeline-item fade-in">
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">Infotech</div>
+            <div class="exp-role">Software Developer &middot; Hyderabad, India</div>
+          </div>
+          <span class="exp-date">Jul 2019 — Dec 2020</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Developed enterprise grade backend systems using <strong>Java 8, Spring Boot, and Hibernate</strong>, enforcing modular design principles across telecom provisioning platforms.</li>
+          <li>Designed and implemented <strong>REST APIs</strong> for telecom provisioning systems handling high throughput workloads under strict SLAs, enabling integration with third party network providers.</li>
+          <li>Built and integrated <strong>SOAP based web services</strong> supporting WSDL and XML payloads for structured data exchange between middleware and client systems.</li>
+          <li>Refactored complex <strong>SQL logic</strong> across analytics modules achieving <strong>40% improvement</strong> in database performance and reducing server load during peak traffic.</li>
+          <li>Automated deployment workflows using <strong>Jenkins and Maven</strong>, establishing CI/CD pipelines that reduced manual intervention and streamlined release cycles.</li>
+          <li>Leveraged <strong>Azure SQL and Azure Monitor</strong> with custom telemetry to optimize backend service performance and gain visibility into production bottlenecks.</li>
+          <li>Led integration testing with <strong>TestNG and JUnit</strong>, developing reusable test suites and achieving <strong>85% test coverage</strong> across backend modules.</li>
+          <li>Re-architected monolithic telecom applications into <strong>Docker based microservices</strong> with multithreaded processing, reducing batch processing time by <strong>30%</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-label">// Academic Background</div>
+    <h2>Education</h2>
+    <div class="edu-grid">
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Master of Science in Information Technology</div>
+        <div class="edu-school">University of Central Missouri</div>
+        <div class="edu-location">Warrensburg, MO, USA</div>
+        <div class="edu-date">Jan 2021 — May 2022</div>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Bachelor of Technology in Electronics &amp; Communication Engineering</div>
+        <div class="edu-school">Sreenidhi Institute of Science &amp; Technology</div>
+        <div class="edu-location">Hyderabad, India</div>
+        <div class="edu-date">Aug 2015 — May 2019</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label">// Let's Connect</div>
+    <h2>Get In Touch</h2>
+    <p class="contact-desc">Open to discussing exciting engineering opportunities, collaborations, or just a great conversation about distributed systems and cloud architecture.</p>
+    <div class="contact-links">
+      <a href="mailto:kumarkondapelly1@gmail.com" class="contact-link">✉ kumarkondapelly1@gmail.com</a>
+      <a href="https://www.linkedin.com/in/naveenkumarkondapelly" target="_blank" class="contact-link">in LinkedIn ↗</a>
+      <a href="tel:+18162040966" class="contact-link">📞 +1 816-204-0966</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Naveen Kumar Kondapelly &middot; Software Development Engineer
+</footer>
+
+<script>
+  // Progressive enhancement: animate on scroll only if JS runs
+  try {
+    const style = document.createElement('style');
+    style.textContent = '.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; } .fade-in.visible { opacity: 1; transform: none; }';
+    document.head.appendChild(style);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.fade-in').forEach((el, i) => {
+      el.style.transitionDelay = (i % 4) * 80 + 'ms';
+      observer.observe(el);
+    });
+  } catch(e) {}
+</script>
+
+</body>
+</html>
